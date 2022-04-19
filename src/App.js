@@ -13,6 +13,7 @@ class  App extends React.Component {
       InputData: [],
       city: '',
       cityData: {},
+      displayLocation:false,
       error: false,
       errorMessage: 'You have an error.'
     }
@@ -27,19 +28,39 @@ class  App extends React.Component {
   }
 
 
-  handleRetrieveData = async (e) => {
+  handleRetrieveData = async (e) => { 
     e.preventDefault();
       // console.log(this.state.city);
 
-    console.log('In State: ', this.state.city);
+    // console.log('In State: ', this.state.city);
     // get city data?
+
+    // try{
+
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
-    console.log(cityData.data[0]);
+    
+   
     this.setState({
-      cityData: cityData.data[0]
+      cityData: cityData.data[1] , 
+      displayLocation : true
     })
-    console.log(cityData);
+
+    
+    console.log(this.state.cityData.lat);
+    console.log(this.state.cityData.lon);
+  // }//end try
+  // catch(error) {
+
+
+
+
+
+
+  // }
+
+
+    
 
   }
 
@@ -87,14 +108,26 @@ let swListItems = this.state.InputData.map((char, idx) => {
 
 
 
-{this.state.error
+{/* {this.state.error
     ?
     <p>{this.state.errorMessage}</p>
     :
     <ul>
       {swListItems}
-    </ul>}
-   
+    </ul>} */}
+
+
+  {this.state.displayLocation
+  ?
+<ul>
+  <li>Longitude : {this.state.cityData.lon}</li>  
+  <li>Lattitude       : {this.state.cityData.lat}</li>
+  </ul>
+
+  :
+  <></>}
+  
+
 
 
     </>
