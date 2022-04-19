@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-// import bootstrap from "react-bootstrap" ; 
+import { Card } from "react-bootstrap" ; 
 
 class  App extends React.Component {
 
@@ -15,7 +15,8 @@ class  App extends React.Component {
       cityData: {},
       displayLocation:false,
       error: false,
-      errorMessage: 'You have an error.'
+      errorMessage: 'You have an error.',
+      mapData : ''
     }
   }
 
@@ -24,7 +25,7 @@ class  App extends React.Component {
     this.setState({
       city : event.target.value
     })
-    console.log(event.target.value);
+    // console.log(event.target.value);
   }
 
 
@@ -39,25 +40,22 @@ class  App extends React.Component {
 
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
+    // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
     
+    console.log(cityData.data[0].lon) ;
+    
+    let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
+    console.log(mapUrl);
+
+    let mapTemp = await axios.get(mapUrl) ;
+
    
     this.setState({
       cityData: cityData.data[1] , 
-      displayLocation : true
+      displayLocation : true ,
+      mapData : mapUrl
     })
 
-    
-    console.log(this.state.cityData);
-    // console.log(this.state.cityData.lon);
-  // }//end try
-  // catch(error) {
-
-
-
-
-
-
-  // }
 
 
     
@@ -119,11 +117,19 @@ class  App extends React.Component {
 
   {this.state.displayLocation
   ?
-<ul>
-<li>Display Name : {this.state.cityData.display_name}</li> 
-  <li>Longitude : {this.state.cityData.lon}</li>  
-  <li>Lattitude       : {this.state.cityData.lat}</li>
-  </ul>
+
+
+  <Card>
+    <Card.Img variant='bottom' src = {this.state.mapData}/>
+      <Card.Body>
+      <ul>
+          <li>Display Name : {this.state.cityData.display_name}</li> 
+            <li>Longitude : {this.state.cityData.lon}</li>  
+            <li>Lattitude       : {this.state.cityData.lat}</li>
+      </ul>
+      </Card.Body>
+  </Card>
+
 
   :
   <></>}
