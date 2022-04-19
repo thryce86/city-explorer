@@ -31,18 +31,15 @@ class  App extends React.Component {
 
   handleRetrieveData = async (e) => { 
     e.preventDefault();
-      // console.log(this.state.city);
 
-    // console.log('In State: ', this.state.city);
-    // get city data?
-
-    // try{
+    try{
+    
 
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
     // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
     
-    console.log(cityData.data[0].lon) ;
+    // console.log(cityData.data[0].lon) ;
     
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
@@ -56,7 +53,10 @@ class  App extends React.Component {
       mapData : mapUrl
     })
 
+    }catch (error){
+      this.setState({error : true }) ;
 
+    }
 
     
 
@@ -106,14 +106,6 @@ class  App extends React.Component {
 
 
 
-{/* {this.state.error
-    ?
-    <p>{this.state.errorMessage}</p>
-    :
-    <ul>
-      {swListItems}
-    </ul>} */}
-
 
   {this.state.displayLocation
   ?
@@ -132,10 +124,35 @@ class  App extends React.Component {
 
 
   :
-  <></>}
+  <>
+
+{this.state.error
+  ? 
+  <>
+  <Card>
+  <Card.Body>
+    <p>Error!!!!!!!!!!!! </p>
+  </Card.Body>
+  <Card.Img src= "https://memegenerator.net/img/instances/21295255/im-sorry.jpg" />
+  </Card>
+  </>
+  :
+  <p></p> 
+  
+  
+  
+  }
+
+
+
+  </>
+  
   
 
-
+  
+  } 
+  
+  
 
     </>
   );
