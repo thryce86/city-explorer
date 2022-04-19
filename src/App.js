@@ -47,8 +47,8 @@ class  App extends React.Component {
     })
 
     
-    console.log(this.state.cityData.lat);
-    console.log(this.state.cityData.lon);
+    console.log(this.state.cityData);
+    // console.log(this.state.cityData.lon);
   // }//end try
   // catch(error) {
 
@@ -71,9 +71,9 @@ class  App extends React.Component {
   render(){
 
     
-let swListItems = this.state.InputData.map((char, idx) => {
-  return <li key={idx}>{char.name}</li>
-})
+// let swListItems = this.state.InputData.map((char, idx) => {
+//   return <li key={idx}>{char.name}</li>
+// })
 
 
 
@@ -120,6 +120,7 @@ let swListItems = this.state.InputData.map((char, idx) => {
   {this.state.displayLocation
   ?
 <ul>
+<li>Display Name : {this.state.cityData.display_name}</li> 
   <li>Longitude : {this.state.cityData.lon}</li>  
   <li>Lattitude       : {this.state.cityData.lat}</li>
   </ul>
