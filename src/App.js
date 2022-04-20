@@ -3,6 +3,8 @@ import React from 'react';
 import './App.css';
 import axios from 'axios';
 import { Card } from "react-bootstrap" ; 
+// import Weather from weather.js;
+import Weather from './weather.js';
 
 class  App extends React.Component {
 
@@ -16,7 +18,8 @@ class  App extends React.Component {
       displayLocation:false,
       error: false,
       errorMessage: 'You have an error.',
-      mapData : ''
+      mapData : '',
+      weatherData : []
     }
   }
 
@@ -44,14 +47,24 @@ class  App extends React.Component {
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
 
-   
+    //lab 07 Frontend
+    //get data from backend 
+    // http://localhost:3001/weather?searchQuery=Paris
+   let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`
 
-   
+   console.log(weatherUrl);
+   let weatherDataTemp = await axios.get(weatherUrl);
+   console.log(weatherDataTemp);
+
+
     this.setState({
       cityData: cityData.data[1] , 
       displayLocation : true ,
-      mapData : mapUrl
+      mapData : mapUrl ,
+      weatherData : weatherDataTemp
     })
+
+    console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
 
     }catch (error){
       this.setState({error : true }) ;
@@ -109,7 +122,7 @@ class  App extends React.Component {
 
   {this.state.displayLocation
   ?
-
+<>
 
   <Card>
     <Card.Img variant='bottom' src = {this.state.mapData}/>
@@ -122,7 +135,9 @@ class  App extends React.Component {
       </Card.Body>
   </Card>
 
-
+<Weather weatherData= {this.state.weatherData} />
+  </>
+ 
   :
   <>
 
