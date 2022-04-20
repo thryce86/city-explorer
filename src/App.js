@@ -44,7 +44,7 @@ class  App extends React.Component {
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
 
-    let mapTemp = await axios.get(mapUrl) ;
+   
 
    
     this.setState({
