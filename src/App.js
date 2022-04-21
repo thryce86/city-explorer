@@ -85,7 +85,7 @@ class  App extends React.Component {
     })
     
     //server conditional 
-    let checkCondition="Error: Invalid querry"; //server.js 97
+    // let checkCondition="Error: Invalid querry"; //server.js 97
     
     //
     // console.log('checking for error app 83 ' ) ;
@@ -94,7 +94,7 @@ class  App extends React.Component {
     //   this.setState({serverError : true})
     // }
 
-    console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
+    // console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
 
     }catch (error){
 
