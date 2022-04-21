@@ -19,21 +19,41 @@ class  App extends React.Component {
       error: false,
       errorMessage: 'You have an error.',
       mapData : '',
+      serverError :false ,
       weatherData : []
     }
   }
 
 
   handleRequest = (event) => {
+    if(this.state.error===true){
+
+   
+    }
+   
+
     this.setState({
       city : event.target.value
     })
+   
+
     // console.log(event.target.value);
   }
 
 
   handleRetrieveData = async (e) => { 
     e.preventDefault();
+    // if(error){
+    //   error=null;
+    // }
+
+    this.setState({
+      error : false ,
+      serverError :false,
+      displayLocation : false
+
+    })
+
 
     try{
     
@@ -63,11 +83,26 @@ class  App extends React.Component {
       mapData : mapUrl ,
       weatherData : weatherDataTemp
     })
+    
+    //server conditional 
+    // let checkCondition="Error: Invalid querry"; //server.js 97
+    
+    //
+    // console.log('checking for error app 83 ' ) ;
 
-    console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
+    // if ( this.state.weatherData === checkCondition) {
+    //   this.setState({serverError : true})
+    // }
+
+    // console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
 
     }catch (error){
-      this.setState({error : true }) ;
+
+      console.log(error) ;
+
+      this.setState({
+        error : true,
+        serverError:true }) ;
 
     }
 
@@ -147,6 +182,14 @@ class  App extends React.Component {
   <Card>
   <Card.Body>
     <p>Error!!!!!!!!!!!! </p>
+          <>
+                {this.state.serverError ?
+                      <p> Server Error.  Please double check your queery </p>
+                      :  <></>
+                }
+          </>
+
+
   </Card.Body>
   <Card.Img src= "https://memegenerator.net/img/instances/21295255/im-sorry.jpg" />
   </Card>
