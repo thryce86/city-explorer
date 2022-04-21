@@ -68,29 +68,52 @@ class  App extends React.Component {
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
 
+    
+
+
     //lab 07 Frontend
     //get data from backend 
     // http://localhost:3001/weather?searchQuery=Paris
-   let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`
+    //lAB 07 
+  //  let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`;
+   
+  // 
+      console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
 
-   console.log(weatherUrl);
-   let weatherDataTemp = await axios.get(weatherUrl);
-   console.log(weatherDataTemp);
+
+
+   
 
 
     this.setState({
       cityData: cityData.data[1] , 
-      displayLocation : true ,
-      mapData : mapUrl ,
-      weatherData : weatherDataTemp
+      mapData : mapUrl 
+     
     })
 
 
+
+
+
 // Lab 08
-    let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
-    let windData = await axios.get(windUrl);
-    // let weatherDataTemp = await axios.get(weatherUrl);
-    console.log(windData);
+let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
+console.log('WeatherUrl'+ weatherUrl);
+let weatherDataTemp = await axios.get(weatherUrl);
+
+
+this.setState({
+  weatherData : weatherDataTemp,
+displayLocation : true ,
+});
+
+  // console.log(weatherDataTemp);
+  // console.log(weatherDataTemp.data );
+    // let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
+    
+    // console.log('windUrl ' + windUrl);
+    // let windData = await axios.get(windUrl);
+    // // let weatherDataTemp = await axios.get(weatherUrl);
+    // console.log(windData);
  
     
     //server conditional 
