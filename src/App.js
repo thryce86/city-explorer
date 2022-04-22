@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Card } from "react-bootstrap" ; 
 // import Weather from weather.js;
 import Weather from './weather.js';
+import Movies from './movies.js';
+
+
 
 class  App extends React.Component {
 
@@ -226,13 +229,12 @@ this.setState({
 
 {/* <p>{this.state.moviesData.length }</p> */}
 
-{/* {this.state.moviesReturned  ?
-<p>GOTSSSSS MOI</p>
+{this.state.moviesReturned  ?
+<Movies movieData ={this.state.movieData} />
 :
-<p>GOTSSSSS MOIVIES2</p>
+<></>
 
-
-} */}
+}
 
 
 
