@@ -5,6 +5,9 @@ import axios from 'axios';
 import { Card } from "react-bootstrap" ; 
 // import Weather from weather.js;
 import Weather from './weather.js';
+import Movies from './movies.js';
+
+
 
 class  App extends React.Component {
 
@@ -21,7 +24,9 @@ class  App extends React.Component {
       mapData : '',
       serverError :false ,
       weatherData : [], 
-      windData : []
+      windData : [],
+      movieData : [],
+      moviesReturned:true
     }
   }
 
@@ -58,7 +63,7 @@ class  App extends React.Component {
 
     try{
     
-
+    let baseUrl = 'http://localhost:3001' ; 
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
     // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
@@ -68,29 +73,75 @@ class  App extends React.Component {
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
 
+    
+
+
     //lab 07 Frontend
     //get data from backend 
     // http://localhost:3001/weather?searchQuery=Paris
-   let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`
+    //lAB 07 
+  //  let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`;
+   
+  // 
 
-   console.log(weatherUrl);
-   let weatherDataTemp = await axios.get(weatherUrl);
-   console.log(weatherDataTemp);
+     
+      // console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
+
+
+
+   
 
 
     this.setState({
       cityData: cityData.data[1] , 
-      displayLocation : true ,
-      mapData : mapUrl ,
-      weatherData : weatherDataTemp
+      mapData : mapUrl 
+     
     })
 
 
+
+
+
 // Lab 08
-    let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
-    let windData = await axios.get(windUrl);
-    // let weatherDataTemp = await axios.get(weatherUrl);
-    console.log(windData);
+let weatherUrl = baseUrl+`/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
+// console.log('WeatherUrl'+ weatherUrl);
+let weatherDataTemp = await axios.get(weatherUrl);
+
+//http://localhost:3001/movies?city=Paris
+let movieUrl= baseUrl +`/movies?city=${this.state.city}` ; 
+let movieData = await axios.get(movieUrl);
+// console.log('movieUrl   '+ movieUrl);
+// console.log(movieData.data.length === 0);
+console.log('got movie data     ' + movieData.data);
+
+
+if(movieData.data.length === 0  ){
+  this.setState({
+    moviesReturned:false
+  })
+
+}else{
+  this.setState({
+    moviesReturned:true
+  } )
+}
+
+// console.log('Got pic?????    ' + this.state.moviesReturned) ;
+
+this.setState({
+  weatherData : weatherDataTemp,
+ displayLocation : true ,
+ movieData : movieData.data
+});
+
+  // console.log(weatherDataTemp);
+  // console.log(weatherDataTemp.data );
+    // let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
+    
+    // console.log('windUrl ' + windUrl);
+    // let windData = await axios.get(windUrl);
+    // // let weatherDataTemp = await axios.get(weatherUrl);
+    // console.log(windData);
  
     
     //server conditional 
@@ -125,10 +176,6 @@ class  App extends React.Component {
 
   render(){
 
-    
-// let swListItems = this.state.InputData.map((char, idx) => {
-//   return <li key={idx}>{char.name}</li>
-// })
 
 
 
@@ -180,6 +227,22 @@ class  App extends React.Component {
   </Card>
 
 <Weather weatherData= {this.state.weatherData} />
+
+
+
+{/* {console.log('in html ' + this.state.movieData)} */}
+
+{this.state.moviesReturned  ?
+
+<Movies movieData ={this.state.movieData} />
+:
+<></>
+
+}
+
+
+
+
   </>
  
   :

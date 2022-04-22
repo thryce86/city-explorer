@@ -17,9 +17,10 @@ class  Weather extends React.Component {
       {/* <Card.Img variant='bottom' src = {this.state.mapData}/> */}
         <Card.Body>
         <ul>
-              <li>Date: {this.props.weatherData.data[0].date}      Forecast: {this.props.weatherData.data[0].description} </li> 
-              <li>Date:  {this.props.weatherData.data[1].date}     Forecast: {this.props.weatherData.data[1].description} </li>
-              <li>Date: {this.props.weatherData.data[2].date}      Forecast: {this.props.weatherData.data[2].description} </li>
+      {this.props.weatherData.data.map((tempObj) =>{
+       return( <li>Date: {tempObj.date}      Forecast: {tempObj.description} </li> )
+      }) }
+
         </ul>
         </Card.Body>
     </Card>
