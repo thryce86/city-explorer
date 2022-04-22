@@ -21,7 +21,9 @@ class  App extends React.Component {
       mapData : '',
       serverError :false ,
       weatherData : [], 
-      windData : []
+      windData : [],
+      movieData : [],
+      moviesReturned:true
     }
   }
 
@@ -58,7 +60,7 @@ class  App extends React.Component {
 
     try{
     
-
+    let baseUrl = 'http://localhost:3001' ; 
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
     // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
@@ -78,6 +80,8 @@ class  App extends React.Component {
   //  let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`;
    
   // 
+
+     
       console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
 
 
@@ -96,14 +100,34 @@ class  App extends React.Component {
 
 
 // Lab 08
-let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
+let weatherUrl = baseUrl+`/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
 console.log('WeatherUrl'+ weatherUrl);
 let weatherDataTemp = await axios.get(weatherUrl);
 
+//http://localhost:3001/movies?city=Paris
+let movieUrl= baseUrl +`/movies?city=${this.state.city}` ; 
+let movieData = await axios.get(movieUrl);
+console.log('movieUrl   '+ movieUrl);
+console.log(movieData.data.length === 0);
+
+
+if(movieData.data.length === 0  ){
+  this.setState({
+    moviesReturned:false
+  })
+
+}else{
+  this.setState({
+    moviesReturned:true
+  } )
+}
+
+console.log('Got pic?????    ' + this.state.moviesReturned) ;
 
 this.setState({
   weatherData : weatherDataTemp,
-displayLocation : true ,
+ displayLocation : true ,
+ movieData : movieData.data
 });
 
   // console.log(weatherDataTemp);
@@ -148,10 +172,6 @@ displayLocation : true ,
 
   render(){
 
-    
-// let swListItems = this.state.InputData.map((char, idx) => {
-//   return <li key={idx}>{char.name}</li>
-// })
 
 
 
@@ -203,6 +223,20 @@ displayLocation : true ,
   </Card>
 
 <Weather weatherData= {this.state.weatherData} />
+
+{/* <p>{this.state.moviesData.length }</p> */}
+
+{/* {this.state.moviesReturned  ?
+<p>GOTSSSSS MOI</p>
+:
+<p>GOTSSSSS MOIVIES2</p>
+
+
+} */}
+
+
+
+
   </>
  
   :
