@@ -85,7 +85,7 @@ class  App extends React.Component {
   // 
 
      
-      console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
+      // console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
 
 
 
@@ -104,14 +104,15 @@ class  App extends React.Component {
 
 // Lab 08
 let weatherUrl = baseUrl+`/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
-console.log('WeatherUrl'+ weatherUrl);
+// console.log('WeatherUrl'+ weatherUrl);
 let weatherDataTemp = await axios.get(weatherUrl);
 
 //http://localhost:3001/movies?city=Paris
 let movieUrl= baseUrl +`/movies?city=${this.state.city}` ; 
 let movieData = await axios.get(movieUrl);
-console.log('movieUrl   '+ movieUrl);
-console.log(movieData.data.length === 0);
+// console.log('movieUrl   '+ movieUrl);
+// console.log(movieData.data.length === 0);
+console.log('got movie data     ' + movieData.data);
 
 
 if(movieData.data.length === 0  ){
@@ -125,7 +126,7 @@ if(movieData.data.length === 0  ){
   } )
 }
 
-console.log('Got pic?????    ' + this.state.moviesReturned) ;
+// console.log('Got pic?????    ' + this.state.moviesReturned) ;
 
 this.setState({
   weatherData : weatherDataTemp,
@@ -227,9 +228,12 @@ this.setState({
 
 <Weather weatherData= {this.state.weatherData} />
 
-{/* <p>{this.state.moviesData.length }</p> */}
+
+
+{/* {console.log('in html ' + this.state.movieData)} */}
 
 {this.state.moviesReturned  ?
+
 <Movies movieData ={this.state.movieData} />
 :
 <></>
