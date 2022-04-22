@@ -20,7 +20,8 @@ class  App extends React.Component {
       errorMessage: 'You have an error.',
       mapData : '',
       serverError :false ,
-      weatherData : []
+      weatherData : [], 
+      windData : []
     }
   }
 
@@ -83,6 +84,14 @@ class  App extends React.Component {
       mapData : mapUrl ,
       weatherData : weatherDataTemp
     })
+
+
+// Lab 08
+    let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
+    let windData = await axios.get(windUrl);
+    // let weatherDataTemp = await axios.get(weatherUrl);
+    console.log(windData);
+ 
     
     //server conditional 
     // let checkCondition="Error: Invalid querry"; //server.js 97
