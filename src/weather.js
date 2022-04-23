@@ -18,7 +18,7 @@ class  Weather extends React.Component {
         <Card.Body>
         <ul>
       {this.props.weatherData.data.map((tempObj,idx) =>{
-       return( <li key={idx}>Date: {tempObj.date}      Forecast: {tempObj.description} </li> )
+       return( <li key={idx}>Date: {tempObj.date}      Forecast: {tempObj.forecast} </li> )
       }) }
 
         </ul>
