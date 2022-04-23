@@ -9,7 +9,7 @@ class  Movies extends React.Component {
 render(){
 
 
-  console.log('Weather   movie path   '+ this.props.movieData) ;
+  console.log('Weather   movie path   ' ,  this.props.movieData) ;
 
 
   
@@ -24,13 +24,13 @@ render(){
 
 return(
 <>
- { this.props.movieData.map((movie) => (
+ { this.props.movieData.map((movie,idx) => (
 
 
 
-    <>
-    <Card>
-    <Card.Body>
+
+    <Card key={idx } >
+    <Card.Body >
     
     <ul>
     <li>{movie.overview}</li>
@@ -39,7 +39,7 @@ return(
     </Card.Body>
     <Card.Img src= {movie.image_url} />
     </Card>
-    </>
+   
 
 
  ))    

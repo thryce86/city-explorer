@@ -9,7 +9,7 @@ class  Weather extends React.Component {
 
 
   render(){
-  console.log('In weather ' + this.props.weatherData.data[0].description ) ;     
+  console.log('In weather ' , this.props.weatherData.data[0].description ) ;     
     
     return( 
       <>
@@ -17,8 +17,8 @@ class  Weather extends React.Component {
       {/* <Card.Img variant='bottom' src = {this.state.mapData}/> */}
         <Card.Body>
         <ul>
-      {this.props.weatherData.data.map((tempObj) =>{
-       return( <li>Date: {tempObj.date}      Forecast: {tempObj.description} </li> )
+      {this.props.weatherData.data.map((tempObj,idx) =>{
+       return( <li key={idx}>Date: {tempObj.date}      Forecast: {tempObj.description} </li> )
       }) }
 
         </ul>

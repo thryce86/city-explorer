@@ -63,7 +63,8 @@ class  App extends React.Component {
 
     try{
     
-    let baseUrl = 'http://localhost:3001' ; 
+    // let baseUrl = 'http://localhost:3001' ; 
+    let baseUrl ='https://here-to-deploy-backend.herokuapp.com'
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
     // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
@@ -112,7 +113,7 @@ let movieUrl= baseUrl +`/movies?city=${this.state.city}` ;
 let movieData = await axios.get(movieUrl);
 // console.log('movieUrl   '+ movieUrl);
 // console.log(movieData.data.length === 0);
-console.log('got movie data     ' + movieData.data);
+console.log('got movie data     ' , movieData.data);
 
 
 if(movieData.data.length === 0  ){
