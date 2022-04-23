@@ -63,13 +63,15 @@ class  App extends React.Component {
 
     try{
     
-    // let baseUrl = 'http://localhost:3001' ; 
-    let baseUrl ='https://here-to-deploy-backend.herokuapp.com'
+    // let baseUrl = 'http://localhost:3001' ;    REACT_APP_BASE_URL=https://here-to-deploy-backend.herokuapp.com
+    let baseUrl =`${process.env.REACT_APP_BASE_URL}` ;
+    // console.log(REACT_APP_BASE_URL)
+
     let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`;
     let cityData = await axios.get(url);
     // https://maps.locationiq.com/v3/staticmap?key=pk.56187e10aa577e0c06008dc4a3e2eda8&center=46.1377048,-122.9344623
     
-    // console.log(cityData.data[0].lon) ;
+   
     
     let mapUrl =`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${cityData.data[0].lat},${cityData.data[0].lon}&zoom=15`
     console.log(mapUrl);
@@ -77,13 +79,6 @@ class  App extends React.Component {
     
 
 
-    //lab 07 Frontend
-    //get data from backend 
-    // http://localhost:3001/weather?searchQuery=Paris
-    //lAB 07 
-  //  let weatherUrl = `http://localhost:3001/weather?searchQuery=${this.state.city}`;
-   
-  // 
 
      
       // console.log('citData      =' + `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`) ;
@@ -105,11 +100,16 @@ class  App extends React.Component {
 
 // Lab 08
 let weatherUrl = baseUrl+`/weather?searchQuery=${this.state.city}&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}`;
-// console.log('WeatherUrl'+ weatherUrl);
+console.log('WeatherUrl',weatherUrl);
 let weatherDataTemp = await axios.get(weatherUrl);
 
 //http://localhost:3001/movies?city=Paris
+// let movieUrl= baseUrl +`/movies?city=${this.state.city}` ; 
+
+//
 let movieUrl= baseUrl +`/movies?city=${this.state.city}` ; 
+
+
 let movieData = await axios.get(movieUrl);
 // console.log('movieUrl   '+ movieUrl);
 // console.log(movieData.data.length === 0);
@@ -135,27 +135,7 @@ this.setState({
  movieData : movieData.data
 });
 
-  // console.log(weatherDataTemp);
-  // console.log(weatherDataTemp.data );
-    // let windUrl = `http://localhost:3001/weather?&lat=${cityData.data[0].lat}&lon=${cityData.data[0].lon}start_date=${this.props.weatherData.data[0].date}&end_date=${this.props.weatherData.data[2].date}`;
-    
-    // console.log('windUrl ' + windUrl);
-    // let windData = await axios.get(windUrl);
-    // // let weatherDataTemp = await axios.get(weatherUrl);
-    // console.log(windData);
- 
-    
-    //server conditional 
-    // let checkCondition="Error: Invalid querry"; //server.js 97
-    
-    //
-    // console.log('checking for error app 83 ' ) ;
-
-    // if ( this.state.weatherData === checkCondition) {
-    //   this.setState({serverError : true})
-    // }
-
-    // console.log('in app.js 67 ' + this.state.weatherData[0].description) ;
+  
 
     }catch (error){
 
@@ -233,13 +213,13 @@ this.setState({
 
 {/* {console.log('in html ' + this.state.movieData)} */}
 
-{this.state.moviesReturned  ?
+{/* {this.state.moviesReturned  ?
 
 <Movies movieData ={this.state.movieData} />
 :
 <></>
 
-}
+} */}
 
 
 
