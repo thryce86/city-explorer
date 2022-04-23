@@ -14,6 +14,12 @@ render(){
 
   
 
+  // this.title = inputObj.original_title;
+  // this.overview = inputObj.overview;
+  // this.total_votes = inputObj.vote_count;
+  // this.image_url = beginningUrl + inputObj.poster_path;
+  // this.popularity = inputObj.vote_average;
+  // this.release_date = inputObj.release_date;
 
 
 
@@ -30,10 +36,15 @@ return(
 
 
     <Card key={idx } >
+       <Card.Title>{movie.title}</Card.Title>
     <Card.Body >
     
     <ul>
-    <li>{movie.overview}</li>
+    <li> Overview : {movie.overview}</li>
+    <li> Release Date : {movie.release_date}</li>
+    <li> Total Votes : {movie.total_votes}</li>
+    <li> Popularity  : {movie.popularity}</li>
+    
     </ul>
 
     </Card.Body>

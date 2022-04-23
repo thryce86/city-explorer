@@ -213,13 +213,13 @@ this.setState({
 
 {/* {console.log('in html ' + this.state.movieData)} */}
 
-{/* {this.state.moviesReturned  ?
+ {this.state.moviesReturned  ?
 
 <Movies movieData ={this.state.movieData} />
 :
 <></>
 
-} */}
+} 
 
 
 
